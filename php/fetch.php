@@ -7,7 +7,13 @@ $url = (isset($_POST["url"]) ? $_POST["url"] : "");
 if ($url === "")
 	exit();
 
-// cURL Steam
+// Site whitelist
+$whitelist = array("store.steampowered.com", "pcgamingwiki.com");
+$urlComponents = parse_url($url);
+if (!in_array($urlComponents["host"], $whitelist))
+	exit();
+
+// cURL Website
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

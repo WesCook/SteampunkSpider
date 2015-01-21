@@ -150,7 +150,7 @@ function threadCreate(url, data, callbackSuccess, callbackError)
 		error: callbackError,
 		complete: function() {threadData.threadRemove();}, // Thread complete, decrement count  TODO: Move generateTable() here?  Maybe with a small timer?
 		dataType: "json",
-		async: true, // TODO: Test: Allow requests to be made asynchronously.  This can be disabled if it causes problems.
+		async: false, // Allow requests to be made asynchronously.  This can be disabled if it causes problems.
 		dataObject: data
 	});
 }
@@ -269,8 +269,8 @@ function pcWikiThreadSuccess(data)
 	// Mark slice as fetched
 	pcWikiInputData.setStatus(slice.id, slice.type, "fetched");
 
-	// If valid entry found
-	if (data.query.results.length !== 0)
+	// If valid entry found and of type "app" (PC Wiki doesn't support subs)
+	if (data.query.results.length !== 0 && slice.type === "app")
 	{
 		var name = data.query.results[Object.keys(data.query.results)[0]].fulltext; // We don't know the name of the game at this stage, so we access its only property instead
 
@@ -461,7 +461,7 @@ function generateTable()
 			// Loop through PC Wiki data
 			for (var k=0, len3=pcWikiData.length; k<len3; k++)
 			{
-				if (pcWikiData[k].id === data[i].us.id) // If iterated ID matches current outputting ID
+				if (pcWikiData[k].id === data[i].us.id && pcWikiData[k].type === data[i].us.type) // If iterated ID matches current outputting ID and type
 				{
 					if (pcWikiData[k].exists) // And iterated ID "exists"
 						output += "[Yes](" + pcWikiData[k].url + ")|"; // Output exists with URL

@@ -14,6 +14,12 @@ Enjoy.
 
 ### Changelog ###
 
+v1.0.1 - 2015-01-20
+
+* PC Gaming Wiki only shows for apps now, not subs
+* Added site whitelist to PHP lookup
+* Small HTML validation fix
+
 v1.0.0 - 2015-01-18
 
 * Initial release
