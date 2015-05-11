@@ -14,6 +14,10 @@ Enjoy.
 
 ### Changelog ###
 
+v1.0.2 - 2015-05-11
+
+* Made HTTP requests asynchronous again
+
 v1.0.1 - 2015-01-20
 
 * PC Gaming Wiki only shows for apps now, not subs

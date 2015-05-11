@@ -150,7 +150,7 @@ function threadCreate(url, data, callbackSuccess, callbackError)
 		error: callbackError,
 		complete: function() {threadData.threadRemove();}, // Thread complete, decrement count  TODO: Move generateTable() here?  Maybe with a small timer?
 		dataType: "json",
-		async: false, // Allow requests to be made asynchronously.  This can be disabled if it causes problems.
+		async: true, // Allow requests to be made asynchronously.  This can be disabled if it causes problems.
 		dataObject: data
 	});
 }
