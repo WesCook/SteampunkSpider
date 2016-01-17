@@ -1,18 +1,24 @@
 ## Steampunk Spider ##
 
-This is a utility to spider Steam's servers (ah, get it) for data, and then output it in reddit markdown.  It checks for regional pricing, metascore, trading cards, and PCGW support.
+This is a utility to crawl Steam's servers for pricing data, and output it as a reddit table in markdown format.  It checks for regional pricing, metascore, trading cards, and PCGW support.
 
 To use, simply paste any Steam URLs into the form - separated by line breaks - and press Generate Table.  You can see the progress as the table fills in below, and the spinning indicator will stop once it is complete.
 
-As the HTTP lookups use AJAX, there is pseudo "threading" support.  Code will not execute at the same time, but multiple lookups can take place at the same time.  The number of threads to execute at once, and how often the heartbeat should update them is configurable.
+This is written almost entirely in Javascript.  Due to same-origin policy however, the lookup function is written in PHP meaning a web server is required for installation.  If Steam enables CORS or JSONP support in the future, this limitation can be removed.
 
-This is written almost entirely in Javascript, except for a small amount of PHP to do lookups.  This is due to same-origin policy, which prevents lookups in JS if the server hasn't allowed it.
+Steampunk Spider uses a threading system for the network requests to make the script as fast as possible.  If however Steam starts rate limiting you (there will be a notice and automatic-retry), the number of threads and heartbeat speed are configurable to mitigate this problem.
 
-It was written for the /r/GameDeals community, but is free to use or take apart for any other use.  Licensed under MIT.  I'm fully open to pull requests, though would appreciate a heads up if you plan to make any sweeping changes first.
+This tool was written with love for the /r/GameDeals community, but is free to use or take apart for any other use.  Licensed under MIT, open to pull requests.
 
 Enjoy.
 
 ### Changelog ###
+
+v1.0.3 - 2016-01-16
+
+* Fixed PCGamingWiki detection
+* Reworded status alert when rate-limiting
+* Updated jQuery/Bootstrap libraries, removed unneeded files
 
 v1.0.2 - 2015-05-11
 

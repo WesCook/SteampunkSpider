@@ -148,7 +148,7 @@ function threadCreate(url, data, callbackSuccess, callbackError)
 		data: {url: url},
 		success: callbackSuccess,
 		error: callbackError,
-		complete: function() {threadData.threadRemove();}, // Thread complete, decrement count  TODO: Move generateTable() here?  Maybe with a small timer?
+		complete: function() {threadData.threadRemove();}, // Thread complete, decrement count
 		dataType: "json",
 		async: true, // Allow requests to be made asynchronously.  This can be disabled if it causes problems.
 		dataObject: data
@@ -229,7 +229,7 @@ function steamThreadError(jqxhr, textStatus, errorThrown)
 
 	// Error log
 	console.log("%cError fetching from Steam - likely IP blocked (" + textStatus + " : " + errorThrown + ")", "color: red;");
-	console.log("Current Steam penalty is: " + threadData.getSteamPenalty() + "ms");
+	console.log("Trying again in " + (threadData.getSteamPenalty() / 1000) + " seconds...");
 }
 
 function pcWikiThreadStart()
@@ -277,7 +277,7 @@ function pcWikiThreadSuccess(data)
 		// Read JSON
 		newData.id = slice.id;
 		newData.type = slice.type;
-		newData.exists = data.query.results[name].exists;
+		newData.exists = true;
 		newData.url = data.query.results[name].fullurl;
 
 		// Add to data object
@@ -753,7 +753,7 @@ var threadData = (function()
 		},
 		addSteamPenalty: function(additionalPenalty)
 		{
-			statusMessage("We are being rate-limited by Steam.  This may take a few minutes to resolve.  Current penalty is: <mark class='highlight'>" + steamPenalty + "ms</mark>."); // Set status message
+			statusMessage("We are being rate-limited by Steam.  This may take a few minutes to resolve.  Trying again in <mark class='highlight'>" + (steamPenalty / 1000) + " seconds</mark>..."); // Set status message
 			steamPenalty += additionalPenalty;
 		},
 		removeSteamPenalty: function()
