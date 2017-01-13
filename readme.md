@@ -14,6 +14,11 @@ Enjoy.
 
 ### Changelog ###
 
+v1.0.4 - 2017-01-13
+
+* Adding error detection to catch cases of incomplete Steam json data
+* Updated jQuery/Bootstrap/html5shiv libraries
+
 v1.0.3 - 2016-01-16
 
 * Fixed PCGamingWiki detection

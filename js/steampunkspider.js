@@ -329,40 +329,82 @@ function extractDataFromJSONSlice(data, steamid, type, country)
 		var steamDataSlice = {};
 		var jsonData = data[steamid].data; // Get us up to the "data" part, for brevity
 
-		// Basic
+		// Included in params
 		steamDataSlice.id = steamid; // ID
 		steamDataSlice.type = type; // Type
 		steamDataSlice.country = country; // Country
-		steamDataSlice.name = jsonData.name; // Name
+
+		// Name
+		try
+		{
+			steamDataSlice.name = jsonData.name;
+		}
+		catch(error)
+		{
+			steamDataSlice.name = "N/A";
+			statusMessage("Error extracting name from game");
+			console.log(error);
+		}
 
 		// Pricing
-		if (type === "app")
+		try
 		{
-			steamDataSlice.discount = jsonData.package_groups[0].subs[0].percent_savings_text.substr(1); // Discount percentage
-			steamDataSlice.price = jsonData.package_groups[0].subs[0].price_in_cents_with_discount; // Price
+			if (type === "app")
+			{
+				steamDataSlice.discount = jsonData.package_groups[0].subs[0].percent_savings_text.substr(1); // Discount percentage
+				steamDataSlice.price = jsonData.package_groups[0].subs[0].price_in_cents_with_discount; // Price
+			}
+			else if (type === "sub")
+			{
+				steamDataSlice.discount = jsonData.price.discount_percent + "%"; // Discount percentage
+				steamDataSlice.price = jsonData.price.final; // Price
+			}
 		}
-		else if (type === "sub")
+		catch(error)
 		{
-			steamDataSlice.discount = jsonData.price.discount_percent + "%"; // Discount percentage
-			steamDataSlice.price = jsonData.price.final; // Price
+			steamDataSlice.discount = "N/A";
+			steamDataSlice.price = "N/A";
+			statusMessage("Error extracting price from " + steamDataSlice.name);
+			console.log(error);
 		}
 
 		// Metacritic
-		if (jsonData.metacritic)
+		try
 		{
-			steamDataSlice.metacritic_score = jsonData.metacritic.score;
-			steamDataSlice.metacritic_url = jsonData.metacritic.url;
+			if (jsonData.metacritic)
+			{
+				steamDataSlice.metacritic_score = jsonData.metacritic.score;
+				steamDataSlice.metacritic_url = jsonData.metacritic.url;
+			}
+			else
+			{
+				steamDataSlice.metacritic_score = "N/A";
+				steamDataSlice.metacritic_url = "N/A";
+			}
 		}
-		else
+		catch(error)
 		{
-			steamDataSlice.metacritic_score = "N/A";
-			steamDataSlice.metacritic_url = "N/A";
+			steamDataSlice.discount = "N/A";
+			steamDataSlice.price = "N/A";
+			statusMessage("Error extracting metacritic score from " + steamDataSlice.name);
+			console.log(error);
 		}
 
 		// Platform
-		steamDataSlice.platform_windows = jsonData.platforms.windows;
-		steamDataSlice.platform_mac = jsonData.platforms.mac;
-		steamDataSlice.platform_linux = jsonData.platforms.linux;
+		try
+		{
+			steamDataSlice.platform_windows = jsonData.platforms.windows;
+			steamDataSlice.platform_mac = jsonData.platforms.mac;
+			steamDataSlice.platform_linux = jsonData.platforms.linux;
+		}
+		catch(error)
+		{
+			steamDataSlice.platform_windows = "N/A";
+			steamDataSlice.platform_mac = "N/A";
+			steamDataSlice.platform_linux = "N/A";
+			statusMessage("Error extracting platform from " + steamDataSlice.name);
+			console.log(error);
+		}
 
 		// Trading Cards
 		steamDataSlice.cards = "No";
