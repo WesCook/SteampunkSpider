@@ -175,9 +175,9 @@ function steamThreadStart()
 			{
 				// Build Steam url
 				if (currentData.type == "app")
-					url = "http://store.steampowered.com/api/appdetails?appids=" + currentData.id + "&cc=" + currentData.country;
+					url = "https://store.steampowered.com/api/appdetails?appids=" + currentData.id + "&cc=" + currentData.country;
 				else if (currentData.type == "sub")
-					url = "http://store.steampowered.com/api/packagedetails?packageids=" + currentData.id + "&cc=" + currentData.country;
+					url = "https://store.steampowered.com/api/packagedetails?packageids=" + currentData.id + "&cc=" + currentData.country;
 
 				// Mark thread as fetching
 				steamInputData.setStatus(currentData.id, currentData.type, currentData.country, "fetching");
@@ -243,7 +243,7 @@ function pcWikiThreadStart()
 		if (localPcWikiInputData[i].status === "unfetched")
 		{
 			// Build URL
-			var url = "http://pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam%20AppID::" + localPcWikiInputData[i].id + "&format=json";
+			var url = "https://pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam%20AppID::" + localPcWikiInputData[i].id + "&format=json";
 
 			// Mark thread as fetching
 			pcWikiInputData.setStatus(localPcWikiInputData[i].id, localPcWikiInputData[i].type, "fetching");
@@ -463,7 +463,7 @@ function generateTable()
 		if (undefined !== data[i].us) // We use US data for main output, so verify it's been fetched first
 		{
 			// Name/URL
-			output += "|[" + data[i].us.name + "](http://store.steampowered.com/" + data[i].us.type + "/" + data[i].us.id + "/)|";
+			output += "|[" + data[i].us.name + "](https://store.steampowered.com/" + data[i].us.type + "/" + data[i].us.id + "/)|";
 
 			// Discount
 			output += data[i].us.discount + "|";

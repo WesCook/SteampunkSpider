@@ -14,27 +14,25 @@ Enjoy.
 
 ### Changelog ###
 
-v1.0.4 - 2017-01-13
+v1.0.5 - 2018-06-21
+* Switching to secure links, resolving crawl errors
 
+v1.0.4 - 2017-01-13
 * Adding error detection to catch cases of incomplete Steam json data
 * Updated jQuery/Bootstrap/html5shiv libraries
 
 v1.0.3 - 2016-01-16
-
 * Fixed PCGamingWiki detection
 * Reworded status alert when rate-limiting
 * Updated jQuery/Bootstrap libraries, removed unneeded files
 
 v1.0.2 - 2015-05-11
-
 * Made HTTP requests asynchronous again
 
 v1.0.1 - 2015-01-20
-
 * PC Gaming Wiki only shows for apps now, not subs
 * Added site whitelist to PHP lookup
 * Small HTML validation fix
 
 v1.0.0 - 2015-01-18
-
 * Initial release
