@@ -1,5 +1,5 @@
 // Constants
-var countryCodes = ['us', 'ca', 'fr', 'uk', 'au', 'br']; // Country codes
+var countryCodes = ['us', 'ca', 'fr', 'uk', 'br']; // Country codes
 var loopTimout = 50; // Time between thread heartbeats in milliseconds
 var maxThreads = 3; // Max number of network threads to run
 
@@ -407,14 +407,14 @@ function extractDataFromJSONSlice(data, steamid, type, country)
 		}
 
 		// Trading Cards
-		steamDataSlice.cards = "No";
+		steamDataSlice.cards = "-";
 		if (jsonData.categories)
 		{
 			var categories = jsonData.categories;
 			for (var i=0, len=categories.length; i<len; i++)
 			{
 				if (categories[i].description === "Steam Trading Cards")
-					steamDataSlice.cards = "Yes";
+					steamDataSlice.cards = "✓";
 			}
 		}
 
@@ -456,8 +456,8 @@ function generateTable()
 
 	// Header
 	output = "";
-	output += "|Title|Disc.|$USD|$CAD|€EUR|£GBP|AU ($USD)|BRL$|Metascore|Platform|Cards|PCGW|\n";
-	output += "|:-|-:|-:|-:|-:|-:|-:|-:|-:|:-:|:-:|:-:|\n";
+	output += "|Title|Disc.|$USD|$CAD|€EUR|£GBP|BRL$|Metascore|Platform|Cards|PCGW|\n";
+	output += "|:-|-:|-:|-:|-:|-:|-:|-:|:-:|:-:|:-:|\n";
 	for (var i=0, len=data.length; i<len; i++)
 	{
 		if (undefined !== data[i].us) // We use US data for main output, so verify it's been fetched first
@@ -488,7 +488,7 @@ function generateTable()
 			if (data[i].us.metacritic_score !== "N/A")
 				output += "[" + data[i].us.metacritic_score + "]("+ data[i].us.metacritic_url +")|";
 			else
-				output += "N/A|";
+				output += "-|"; // Output doesn't exist
 
 			// Platform
 			var platforms = "";
@@ -506,9 +506,9 @@ function generateTable()
 				if (pcWikiData[k].id === data[i].us.id && pcWikiData[k].type === data[i].us.type) // If iterated ID matches current outputting ID and type
 				{
 					if (pcWikiData[k].exists) // And iterated ID "exists"
-						output += "[Yes](" + pcWikiData[k].url + ")|"; // Output exists with URL
+						output += "[✓](" + pcWikiData[k].url + ")|"; // Output exists with URL
 					else
-						output += "No|"; // Output doesn't exist
+						output += "-|"; // Output doesn't exist
 				}
 			}
 
