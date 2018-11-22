@@ -14,9 +14,12 @@ Enjoy.
 
 ### Changelog ###
 
+v1.0.7 - 2018-11-22
+* Adding (now functional) AUD column
+
 v1.0.6 - 2018-06-21
 * Updating formatting to use icons for yes/no
-* Removing AU column
+* Removing AUD column
 
 v1.0.5 - 2018-06-21
 * Switching to secure links, resolving crawl errors

@@ -1,5 +1,5 @@
 // Constants
-var countryCodes = ['us', 'ca', 'fr', 'uk', 'br']; // Country codes
+var countryCodes = ['us', 'ca', 'au', 'fr', 'uk', 'br']; // Country codes
 var loopTimout = 50; // Time between thread heartbeats in milliseconds
 var maxThreads = 3; // Max number of network threads to run
 
@@ -456,8 +456,8 @@ function generateTable()
 
 	// Header
 	output = "";
-	output += "|Title|Disc.|$USD|$CAD|€EUR|£GBP|BRL$|Metascore|Platform|Cards|PCGW|\n";
-	output += "|:-|-:|-:|-:|-:|-:|-:|-:|:-:|:-:|:-:|\n";
+	output += "|Title|Disc.|$USD|$CAD|$AUD|€EUR|£GBP|BRL$|Metascore|Platform|Cards|PCGW|\n";
+	output += "|:-|-:|-:|-:|-:|-:|-:|-:|-:|:-:|:-:|:-:|\n";
 	for (var i=0, len=data.length; i<len; i++)
 	{
 		if (undefined !== data[i].us) // We use US data for main output, so verify it's been fetched first
