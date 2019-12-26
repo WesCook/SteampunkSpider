@@ -134,7 +134,7 @@ function threadManager()
 function threadCreate(url, data, callbackSuccess, callbackError)
 {
 	// Logging
-	console.log("%cThread created with URL: " + url, "color: blue;");
+	console.log("%cThread created with URL: " + url, "color: teal;");
 
 	// Increment thread count
 	threadData.threadAdd();
@@ -200,7 +200,7 @@ function steamThreadSuccess(data)
 	var slice = this.dataObject;
 
 	// Logging
-	console.log("%cSteam Thread " + slice.id + "/" + slice.country + " ended successfully.", "color: blue;");
+	console.log("%cSteam Thread " + slice.id + "/" + slice.country + " ended successfully.", "color: teal;");
 
 	// Mark slice as fetched
 	steamInputData.setStatus(slice.id, slice.type, slice.country, "fetched");
@@ -209,7 +209,7 @@ function steamThreadSuccess(data)
 	threadData.removeSteamPenalty();
 
 	// Pass data
-	extractDataFromJSONSlice(data, slice.id, slice.type, slice.country); // Extract JSON into object
+	extractSteamJSON(data, slice.id, slice.type, slice.country);
 }
 
 // If error, register as "unfetched" so it can be retried
@@ -219,7 +219,7 @@ function steamThreadError(jqxhr, textStatus, errorThrown)
 	var slice = this.dataObject;
 
 	// Logging
-	console.log("%cSteam Thread " + slice.id + "/" + slice.country + " ended in failure.", "color: blue;");
+	console.log("%cSteam Thread " + slice.id + "/" + slice.country + " ended in failure.", "color: orange;");
 
 	// Mark slice as unfetched, so it can be tried again by a future thread
 	steamInputData.setStatus(slice.id, slice.type, slice.country, "unfetched");
@@ -228,8 +228,8 @@ function steamThreadError(jqxhr, textStatus, errorThrown)
 	threadData.addSteamPenalty(5000);
 
 	// Error log
-	console.log("%cError fetching from Steam - likely IP blocked (" + textStatus + " : " + errorThrown + ")", "color: red;");
-	console.log("Trying again in " + (threadData.getSteamPenalty() / 1000) + " seconds...");
+	console.log("%cError fetching from Steam (" + textStatus + " : " + errorThrown + ")", "color: red;");
+	console.log("Trying again in " + (threadData.getSteamPenalty() / 1000) + " seconds.");
 }
 
 function pcWikiThreadStart()
@@ -243,7 +243,8 @@ function pcWikiThreadStart()
 		if (localPcWikiInputData[i].status === "unfetched")
 		{
 			// Build URL
-			var url = "https://pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam%20AppID::" + localPcWikiInputData[i].id + "&format=json";
+			var url = "https://www.pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam+AppID::" + localPcWikiInputData[i].id + "&format=json";
+			//var url = "https%3A%2F%2Fwww.pcgamingwiki.com%2Fw%2Fapi.php%3Faction%3Daskargs%26conditions%3DSteam%2BAppID%3A%3A" + localPcWikiInputData[i].id + "%26format%3Djson";
 
 			// Mark thread as fetching
 			pcWikiInputData.setStatus(localPcWikiInputData[i].id, localPcWikiInputData[i].type, "fetching");
@@ -264,7 +265,7 @@ function pcWikiThreadSuccess(data)
 	var newData = {};
 
 	// Logging
-	console.log("%cPC Wiki Thread " + slice.id + " ended successfully.", "color: blue;");
+	console.log("%cPC Wiki Thread " + slice.id + " ended successfully.", "color: teal;");
 
 	// Mark slice as fetched
 	pcWikiInputData.setStatus(slice.id, slice.type, "fetched");
@@ -304,7 +305,7 @@ function pcWikiThreadError(jqxhr, textStatus, errorThrown)
 	var slice = this.dataObject;
 
 	// Logging
-	console.log("%cPC Wiki Thread " + slice.id + " ended in failure.", "color: blue;");
+	console.log("%cPC Wiki Thread " + slice.id + " ended in failure.", "color: orange;");
 
 	// Mark slice as unfetched, so it can be tried again by a future thread
 	pcWikiInputData.setStatus(slice.id, slice.type, "unfetched");
@@ -314,7 +315,7 @@ function pcWikiThreadError(jqxhr, textStatus, errorThrown)
 }
 
 // Extract returned data from JSON object, search for relevant information and add to complete steamOutputData
-function extractDataFromJSONSlice(data, steamid, type, country)
+function extractSteamJSON(data, steamid, type, country)
 {
 	// Logging
 	console.log("Data extracted from JSON slice.");
@@ -795,7 +796,7 @@ var threadData = (function()
 		},
 		addSteamPenalty: function(additionalPenalty)
 		{
-			statusMessage("We are being rate-limited by Steam.  This may take a few minutes to resolve.  Trying again in <mark class='highlight'>" + (steamPenalty / 1000) + " seconds</mark>..."); // Set status message
+			statusMessage("An error has occured.  See the log for details.  In case this is caused by rate-limiting, we will try again after <mark class='highlight'>" + (steamPenalty / 1000) + " seconds</mark>.");
 			steamPenalty += additionalPenalty;
 		},
 		removeSteamPenalty: function()

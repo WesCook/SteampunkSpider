@@ -1,4 +1,4 @@
-## Steampunk Spider ##
+# Steampunk Spider
 
 This is a utility to crawl Steam's servers for pricing data, and output it as a reddit table in markdown format.  It checks for regional pricing, metascore, trading cards, and PCGW support.
 
@@ -12,7 +12,16 @@ This tool was written with love for the /r/GameDeals community, but is free to u
 
 Enjoy.
 
-### Changelog ###
+## Changelog
+
+v1.0.8 - 2019-12-26
+* Repairing PCGW functionality
+* Updating error messages
+* Adding version string to footer
+* Switching layout to flexbox
+* Cleaning up CSS
+* Updated to jQuery 3
+* Removing IE9 polyfills
 
 v1.0.7 - 2018-11-22
 * Adding (now functional) AUD column

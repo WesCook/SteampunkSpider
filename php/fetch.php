@@ -8,7 +8,7 @@ if ($url === "")
 	exit();
 
 // Site whitelist
-$whitelist = array("store.steampowered.com", "pcgamingwiki.com");
+$whitelist = array("store.steampowered.com", "www.pcgamingwiki.com");
 $urlComponents = parse_url($url);
 if (!in_array($urlComponents["host"], $whitelist))
 	exit();
@@ -20,6 +20,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($ch);
 
 // Return JSON
+header('Content-Type: application/json');
 echo $response;
 
 ?>

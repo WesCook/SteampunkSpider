@@ -1,23 +1,63 @@
-/* Main */
-textarea {min-height: 200px; margin-bottom: 13px;}
-button {margin-right: 5px; margin-bottom: 420px;}
-.description {margin-top: -10px; margin-bottom: 13px;}
+/* Primary layout */
+textarea {
+	min-height: 200px;
+	margin-bottom: 13px;
+}
+button {
+	margin-right: 5px;
+	margin-bottom: 420px;
+}
+.description {
+	margin-top: -10px;
+	margin-bottom: 13px;
+}
 
-/* Disabled Form */
-.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {cursor: inherit;}
+/* Sticky footer */
+html, body {
+	height: 100%;
+}
+body {
+	display: flex;
+	flex-direction: column;
+}
+main {
+	flex: 1 0 auto;
+}
+footer {
+	flex-shrink: 0;
+	margin-top: 50px;
+	margin-bottom: 0 !important;
+}
 
-/* Status Message */
-#status {font-size: 17px; opacity: 0; transition: opacity 0.6s ease-in; color: #AB0E0E;}
-#status.load {opacity: 1;}
+/* Status message */
+#status {
+	font-size: 17px;
+	opacity: 0;
+	transition: opacity 0.6s ease-in;
+	color: #ab0e0e;
+}
+#status.load {
+	opacity: 1;
+}
 
-/* Footer */
-html, body {height: 100%;}
-.main {min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -62px; padding-bottom: 75px;}
-footer {height: 62px;}
-.navbar {margin-bottom: 0;}
+/* Disabled form */
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+	cursor: inherit;
+}
 
-/* Spinner */
-.glyphicon-refresh-animate {-animation: spin 1.3s infinite linear; -webkit-animation: spin 1.3s infinite linear; -moz-animation: spin 1.3s infinite linear; -ms-animation: spin 1.3s infinite linear;}
-@keyframes spin {from {transform: rotate(0deg);} to {transform: rotate(360deg);}}
-@-webkit-keyframes spin {from {-webkit-transform: rotate(0deg);} to {-webkit-transform: rotate(360deg);}}
-@-moz-keyframes spin {from {-moz-transform: rotate(0deg);} to {-moz-transform: rotate(360deg);}}
+/* Spinner Animation */
+.glyphicon-refresh-animate {
+	-animation: spin 1.3s infinite linear;
+	-webkit-animation: spin 1.3s infinite linear;
+	-moz-animation: spin 1.3s infinite linear;
+	-ms-animation: spin 1.3s infinite linear;
+}
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	} to {
+		transform: rotate(360deg);
+	}
+}
