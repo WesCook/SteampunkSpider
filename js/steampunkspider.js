@@ -363,7 +363,7 @@ function extractSteamJSON(data, steamid, type, country)
 				{
 					steamDataSlice.discount = jsonData.package_groups[0].subs[0].percent_savings_text.substr(1); // Discount percentage
 					steamDataSlice.price = jsonData.package_groups[0].subs[0].price_in_cents_with_discount; // Price
-					statusMessage("Using fallback price method on " + steamDataSlice.name);
+					statusMessage("Using fallback method on " + steamDataSlice.name);
 				}
 			}
 			else if (type === "sub")
@@ -583,21 +583,20 @@ function cleanUp()
 function statusMessage(msg)
 {
 	// Set HTML to text, and update class for fade transition
-	if (msg !== "")
-	{
-		$("#status").html(msg);
-		$("#status").addClass("load");
-		console.log("%c" + msg, "color: #ab0e0e;");
-	}
-	else
-	{
-		// On a timer, so fade out has time to be fancy
-		setTimeout(1000, () => {
-			$("#status").html(msg);
-			alert("boop");
-		});
-		$("#status").removeClass("load");
-	}
+	$("#status").html(msg);
+	$("#status").addClass("visible");
+	$("#status").html(msg);
+	console.log("%c" + msg, "color: #ab0e0e;");
+
+	// Fade status out after a short timeout
+	(async () => {
+		await asyncSetTimeout(1500);
+		$("#status").removeClass("visible");
+	})()
+}
+
+function asyncSetTimeout(delay) {
+	return new Promise(resolve => setTimeout(resolve, delay));
 }
 
 // Set up closure to store/manage form (input) data
@@ -823,7 +822,6 @@ var threadData = (function()
 		},
 		removeSteamPenalty: function()
 		{
-			statusMessage(""); // Clear status message
 			steamPenalty = 0;
 		},
 		reset: function()
