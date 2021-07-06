@@ -36,7 +36,7 @@ footer {
 	transition: opacity 0.6s ease-in;
 	color: #ab0e0e;
 }
-#status.load {
+#status.visible {
 	opacity: 1;
 }
 

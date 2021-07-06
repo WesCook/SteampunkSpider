@@ -14,6 +14,13 @@ Enjoy.
 
 ## Changelog
 
+v1.1.0 - 2021-07-06
+* Adding more-accurate method of price checking with fallback to original method
+* Prices now use leading zeroes (ie. $0.59 instead of $.59)
+* Removing Metacritic column due to inconsistent availability
+* Status message clearing is now asynchronous
+* Console now logs all status messages
+
 v1.0.8 - 2019-12-26
 * Repairing PCGW functionality
 * Updating error messages
