@@ -381,26 +381,26 @@ function extractSteamJSON(data, steamid, type, country)
 		}
 
 		// Metacritic
-		try
-		{
-			if (jsonData.metacritic)
-			{
-				steamDataSlice.metacritic_score = jsonData.metacritic.score;
-				steamDataSlice.metacritic_url = jsonData.metacritic.url;
-			}
-			else
-			{
-				steamDataSlice.metacritic_score = "N/A";
-				steamDataSlice.metacritic_url = "N/A";
-			}
-		}
-		catch(error)
-		{
-			steamDataSlice.discount = "N/A";
-			steamDataSlice.price = "N/A";
-			statusMessage("Error extracting metacritic score from " + steamDataSlice.name);
-			console.log(error);
-		}
+		// try
+		// {
+		// 	if (jsonData.metacritic)
+		// 	{
+		// 		steamDataSlice.metacritic_score = jsonData.metacritic.score;
+		// 		steamDataSlice.metacritic_url = jsonData.metacritic.url;
+		// 	}
+		// 	else
+		// 	{
+		// 		steamDataSlice.metacritic_score = "N/A";
+		// 		steamDataSlice.metacritic_url = "N/A";
+		// 	}
+		// }
+		// catch(error)
+		// {
+		// 	steamDataSlice.discount = "N/A";
+		// 	steamDataSlice.price = "N/A";
+		// 	statusMessage("Error extracting metacritic score from " + steamDataSlice.name);
+		// 	console.log(error);
+		// }
 
 		// Platform
 		try
@@ -445,8 +445,8 @@ function extractSteamJSON(data, steamid, type, country)
 			country: country,
 			price: "N/A",
 			discount: "N/A",
-			metacritic_score: "N/A",
-			metacritic_url: "N/A",
+			// metacritic_score: "N/A",
+			// metacritic_url: "N/A",
 			cards: "N/A"
 		});
 
@@ -468,8 +468,8 @@ function generateTable()
 
 	// Header
 	output = "";
-	output += "|Title|Disc.|$USD|$CAD|$AUD|€EUR|£GBP|BRL$|Metascore|Platform|Cards|PCGW|\n";
-	output += "|:-|-:|-:|-:|-:|-:|-:|-:|-:|:-:|:-:|:-:|\n";
+	output += "|Title|Disc.|$USD|$CAD|$AUD|€EUR|£GBP|BRL$|Platform|Cards|PCGW|\n";
+	output += "|:-|-:|-:|-:|-:|-:|-:|-:|-:|:-:|:-:|\n";
 	for (var i=0, len=data.length; i<len; i++)
 	{
 		if (undefined !== data[i].us) // We use US data for main output, so verify it's been fetched first
@@ -503,10 +503,10 @@ function generateTable()
 			}
 
 			// Metascore
-			if (data[i].us.metacritic_score !== "N/A")
-				output += "[" + data[i].us.metacritic_score + "]("+ data[i].us.metacritic_url +")|";
-			else
-				output += "-|"; // Output doesn't exist
+			// if (data[i].us.metacritic_score !== "N/A")
+			// 	output += "[" + data[i].us.metacritic_score + "]("+ data[i].us.metacritic_url +")|";
+			// else
+			// 	output += "-|"; // Output doesn't exist
 
 			// Platform
 			var platforms = "";
