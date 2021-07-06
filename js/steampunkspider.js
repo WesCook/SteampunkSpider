@@ -4,13 +4,13 @@ var loopTimout = 50; // Time between thread heartbeats in milliseconds
 var maxThreads = 3; // Max number of network threads to run
 
 // Listen for button presses
-$(document).ready(function()
+$(document).ready(() =>
 {
 	// Generate Data button
 	$("#generate-data").click(generateData);
 
 	// Select Markdown button
-	$("#select-markdown").click(function()
+	$("#select-markdown").click(() =>
 	{
 		$("#data-output").select(); // Select data output
 	});
@@ -101,7 +101,7 @@ function threadManager()
 	console.log("Starting thread manager.");
 
 	// Start looping heartbeat
-	var loop = function()
+	var loop = () =>
 	{
 		var steamAllFetched = false;
 		var pcWikiAllFetched = false;
@@ -148,7 +148,9 @@ function threadCreate(url, data, callbackSuccess, callbackError)
 		data: {url: url},
 		success: callbackSuccess,
 		error: callbackError,
-		complete: function() {threadData.threadRemove();}, // Thread complete, decrement count
+		complete: () => { // Thread complete, decrement count
+			threadData.threadRemove();
+		},
 		dataType: "json",
 		async: true, // Allow requests to be made asynchronously.  This can be disabled if it causes problems.
 		dataObject: data
@@ -352,8 +354,17 @@ function extractSteamJSON(data, steamid, type, country)
 		{
 			if (type === "app")
 			{
-				steamDataSlice.discount = jsonData.package_groups[0].subs[0].percent_savings_text.substr(1); // Discount percentage
-				steamDataSlice.price = jsonData.package_groups[0].subs[0].price_in_cents_with_discount; // Price
+				try
+				{
+					steamDataSlice.discount = jsonData.price_overview.discount_percent + "%"; // Discount percentage
+					steamDataSlice.price = jsonData.price_overview.final; // Price
+				}
+				catch(error2)
+				{
+					steamDataSlice.discount = jsonData.package_groups[0].subs[0].percent_savings_text.substr(1); // Discount percentage
+					steamDataSlice.price = jsonData.package_groups[0].subs[0].price_in_cents_with_discount; // Price
+					statusMessage("Using fallback price method on " + steamDataSlice.name);
+				}
 			}
 			else if (type === "sub")
 			{
@@ -477,7 +488,13 @@ function generateTable()
 					var priceText = data[i][countryCodes[j]].price; // Get price
 					priceText = String(priceText); // Convert to string
 					if (priceText !== "N/A") // If price is valid
-						output += priceText.slice(0, -2) + "." + priceText.slice(-2) + "|"; // Insert period two characters from the right.
+					{
+						// Insert period two characters from the right
+						let dollar = priceText.slice(0, -2);
+						dollar = dollar.padStart(1, "0");
+						let cents = priceText.slice(-2);
+						output += dollar + "." + cents + "|";
+					}
 					else
 						output += priceText + "|"; // If error, just insert N/A
 				}
@@ -570,10 +587,15 @@ function statusMessage(msg)
 	{
 		$("#status").html(msg);
 		$("#status").addClass("load");
+		console.log("%c" + msg, "color: #ab0e0e;");
 	}
 	else
 	{
-		setTimeout(1000, function(){$("#status").html(msg);}); // On a timer, so fade out has time to be fancy
+		// On a timer, so fade out has time to be fancy
+		setTimeout(1000, () => {
+			$("#status").html(msg);
+			alert("boop");
+		});
 		$("#status").removeClass("load");
 	}
 }
