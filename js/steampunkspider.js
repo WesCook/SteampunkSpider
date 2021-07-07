@@ -524,7 +524,7 @@ function generateTable()
 				if (pcWikiData[k].id === data[i].us.id && pcWikiData[k].type === data[i].us.type) // If iterated ID matches current outputting ID and type
 				{
 					if (pcWikiData[k].exists) // And iterated ID "exists"
-						output += "[✓](" + pcWikiData[k].url + ")|"; // Output exists with URL
+						output += "[✓](" + sanitizeMarkdownLink(pcWikiData[k].url) + ")|"; // Output exists with URL
 					else
 						output += "-|"; // Output doesn't exist
 				}
@@ -537,6 +537,13 @@ function generateTable()
 
 	// Pass on to next function, output data to page
 	returnOutput(output);
+}
+
+// Escape right parenthesis
+// Only required for PCGW, because Steam links are built dynamically from their ID
+function sanitizeMarkdownLink(url)
+{
+	return url.replaceAll(")", "\\)");
 }
 
 // Outputs data to form, as delivered from generateTable().

@@ -14,6 +14,9 @@ Enjoy.
 
 ## Changelog
 
+v1.1.1 - 2021-07-07
+* Automatically escape right parenthesis in PC Gaming Wiki links
+
 v1.1.0 - 2021-07-06
 * Adding more-accurate method of price checking with fallback to original method
 * Prices now use leading zeroes (ie. $0.59 instead of $.59)
