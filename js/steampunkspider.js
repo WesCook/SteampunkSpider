@@ -245,8 +245,7 @@ function pcWikiThreadStart()
 		if (localPcWikiInputData[i].status === "unfetched")
 		{
 			// Build URL
-			var url = "https://www.pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam+AppID::" + localPcWikiInputData[i].id + "&format=json";
-			//var url = "https%3A%2F%2Fwww.pcgamingwiki.com%2Fw%2Fapi.php%3Faction%3Daskargs%26conditions%3DSteam%2BAppID%3A%3A" + localPcWikiInputData[i].id + "%26format%3Djson";
+			var url = `https://www.pcgamingwiki.com/w/api.php?action=cargoquery&tables=Infobox_game&fields=Infobox_game._pageID=PageID,Infobox_game.Steam_AppID&where=Infobox_game.Steam_AppID%20HOLDS%20"${localPcWikiInputData[i].id}"&format=json`;
 
 			// Mark thread as fetching
 			pcWikiInputData.setStatus(localPcWikiInputData[i].id, localPcWikiInputData[i].type, "fetching");
@@ -273,15 +272,13 @@ function pcWikiThreadSuccess(data)
 	pcWikiInputData.setStatus(slice.id, slice.type, "fetched");
 
 	// If valid entry found and of type "app" (PC Wiki doesn't support subs)
-	if (data.query.results.length !== 0 && slice.type === "app")
+	if (data?.cargoquery[0]?.title && slice.type === "app")
 	{
-		var name = data.query.results[Object.keys(data.query.results)[0]].fulltext; // We don't know the name of the game at this stage, so we access its only property instead
-
 		// Read JSON
 		newData.id = slice.id;
 		newData.type = slice.type;
 		newData.exists = true;
-		newData.url = data.query.results[name].fullurl;
+		newData.url = "https://www.pcgamingwiki.com/api/appid.php?appid=" + slice.id;
 
 		// Add to data object
 		pcWikiOutputData.append(newData);

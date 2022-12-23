@@ -14,6 +14,9 @@ Enjoy.
 
 ## Changelog
 
+v1.2.0 - 2022-12-23
+* Repairing PC Gaming Wiki fetches after API change
+
 v1.1.1 - 2021-07-07
 * Automatically escape right parenthesis in PC Gaming Wiki links
 
